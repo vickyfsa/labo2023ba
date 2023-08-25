@@ -1,3 +1,6 @@
+# Limpiar las variables de ambiente
+rm(list = ls())
+
 # Arbol elemental con libreria  rpart
 # Debe tener instaladas las librerias  data.table  ,  rpart  y  rpart.plot
 
@@ -7,7 +10,7 @@ require("rpart")
 require("rpart.plot")
 
 # Aqui se debe poner la carpeta de la materia de SU computadora local
-setwd("X:\\gdrive\\austral2023ba\\") # Establezco el Working Directory
+setwd("C:\\Users\\ferna\\OneDrive\\Maestría Austral\\8 - Laboratorio de Implementación I\\") # Establezco el Working Directory
 
 # cargo el dataset
 dataset <- fread("./datasets/dataset_pequeno.csv")
