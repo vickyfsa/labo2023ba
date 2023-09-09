@@ -15,7 +15,7 @@ PARAM$experimento <- "DR6211"
 
 PARAM$exp_input <- "CA6111"
 
-PARAM$variables_intrames <- TRUE # atencion esto esta en TRUE
+PARAM$variables_intrames <- FALSE # atencion esto esta en TRUE
 
 # valores posibles
 #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion", "estandarizar"
