@@ -17,4 +17,4 @@ source("~/labo2023ba/src/workflow-inicial/641_000_TS_training_strategy.r")
 
 # ultimos pasos, muy lentos
 source("~/labo2023ba/src/workflow-inicial/651_000_HT_lightgbm.r")
-source("~/labo2023ba/src/workflow-inicial/661_000_Z_final.r")
+source("~/labo2023ba/src/workflow-inicial/661_000_ZZ_final.r")
