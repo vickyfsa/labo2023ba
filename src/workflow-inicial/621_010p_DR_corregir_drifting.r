@@ -89,7 +89,6 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # combino MasterCard y Visa
   dataset[, vm_mfinanciacion_limite := rowSums(cbind(Master_mfinanciacion_limite, Visa_mfinanciacion_limite), na.rm = TRUE)]
-
   dataset[, vm_Fvencimiento := pmin(Master_Fvencimiento, Visa_Fvencimiento, na.rm = TRUE)]
   dataset[, vm_Finiciomora := pmin(Master_Finiciomora, Visa_Finiciomora, na.rm = TRUE)]
   dataset[, vm_msaldototal := rowSums(cbind(Master_msaldototal, Visa_msaldototal), na.rm = TRUE)]
@@ -129,6 +128,40 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, vmr_mpagominimo := vm_mpagominimo / vm_mlimitecompra]
 
   # Aqui debe usted agregar sus propias nuevas variables
+  dataset[, salarios_recibidos := rowSums(cbind(mpayroll, mpayroll2), na.rm = TRUE)] #Ingresos por empleos en relación de dependencia
+  dataset[, descuentos_recibidos := rowSums(cbind(mcajeros_propios_descuentos, mtarjeta_visa_descuentos, mtarjeta_master_descuentos), na.rm = TRUE)] #Descuentos
+  dataset[, comisiones_totales := rowSums(cbind(mcomisiones_mantenimiento, mcomisiones_otras), na.rm = TRUE)] #Comisiones
+  dataset[, ingresos_totales := rowSums(cbind(mpayroll, mpayroll2, mtransferencias_recibidas, mcheques_depositados), na.rm = TRUE)] #Ingresos Totales
+  dataset[, egresos_totales := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Egresos Totales
+  dataset[, gastos_totales := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_msaldopesos, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+  dataset[, dolares_neto := mforex_buy - mforex_sell, na.rm = TRUE] #Compra dólares menos venta de dólares
+  dataset[, activos_totales := rowSums(cbind(mcuentas_saldo, mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #Activos Totales
+  dataset[, dolares_neto := matm / (matm + matm_other), na.rm = TRUE] #Comparación entre uso de cajeros propios vs de otros bancos
+  dataset[, vmr_tc_mayor90 := ifelse(!is.na(vmr_mconsumototal), ifelse(vmr_mconsumototal > 0.9, 1, 0), NA)] # Valor 1 si consumió más del 90% del límite de la tarjeta
+  dataset[, promedio_salario := mean(salarios_recibidos, na.rm = TRUE), by = foto_mes] #Promedio de salarios por mes
+  dataset[, distancia_salarioprom := salarios_recibidos - promedio_salario, na.rm = TRUE] #Distancia entre salario recibido y promedio 
+  dataset[, distancia_salarioprom_edad := distancia_salarioprom / (cliente_edad^2), na.rm = TRUE] 
+  dataset[, endeudamiento := rowSums(cbind(cprestamos_personales, cprestamos_prendarios, cprestamos_hipotecarios), na.rm = TRUE)] #Total de prestamos
+  dataset[, endeudamiento_rate := endeudamiento / activos_totales, na.rm = TRUE)] #Total de prestamos sobre los activos
+  dataset[, endeudamiento_edad := endeudamiento_rate / (cliente_edad^2), na.rm = TRUE] #Endeudamiento sobre la edad
+  dataset[, endeudamiento_gcia_bco := endeudamiento_rate / (mpasivos_margen^2), na.rm = TRUE] #endeudamiento sobre la ganancia del banco
+  dataset[, ingresos_gcia_bco := ingresos_totales / (mpasivos_margen^2), na.rm = TRUE] #Ingresaos totales sobre la ganancia del banco
+
+  dataset[, descub_ingresos := cdescubierto_preacordado / ingresos_totales, na.rm = TRUE] #Descubierto preacordado sobre ingresos totales
+  dataset[, descub_endeudamiento := cdescubierto_preacordado / endeudamiento_rate, na.rm = TRUE] #Descubierto preacordado sobre ingresos totales
+  dataset[, descub_cta_corriente := ifelse(!is.na(mcuenta_corriente), ifelse(mcuenta_corriente < 0, 1, 0), NA)] #Valores negativos en cuenta corriente
+
+  dataset[, promedio_ctrx_q_norm := mean(ctrx_quarter_normalizado, na.rm = TRUE), by = foto_mes] 
+  dataset[, distancia_ctrx_q_norm_prom := ctrx_quarter_normalizado - promedio_ctrx_q_norm, na.rm = TRUE] 
+  dataset[, distancia_ctrx_q_norm_edad := distancia_ctrx_q_norm_prom / (cliente_edad^2), na.rm = TRUE] 
+
+  dataset[, promedio_ctrx_q := mean(ctrx_quarter, na.rm = TRUE), by = foto_mes] 
+  dataset[, distancia_ctrx_q_prom := ctrx_quarter - promedio_ctrx_q, na.rm = TRUE] 
+  dataset[, distancia_ctrx_q_edad := distancia_ctrx_q_prom / (cliente_edad^2), na.rm = TRUE] 
+  dataset[, ctrx_q_edad := ctrx_quarter / (cliente_edad^2), na.rm = TRUE] 
+
+
+
 
   # valvula de seguridad para evitar valores infinitos
   # paso los infinitos a NULOS
