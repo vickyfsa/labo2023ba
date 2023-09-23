@@ -21,27 +21,27 @@ PARAM$experimento <- "FE631_010p"
 
 PARAM$exp_input <- "DR621_010p"
 
-PARAM$lag1 <- FALSE
-PARAM$lag2 <- FALSE
-PARAM$lag3 <- FALSE
+PARAM$lag1 <- TRUE
+PARAM$lag2 <- TRUE
+PARAM$lag3 <- TRUE
 
-PARAM$Tendencias1$run <- FALSE
+PARAM$Tendencias1$run <- TRUE
 PARAM$Tendencias1$ventana <- 2
-PARAM$Tendencias1$tendencia <- FALSE
-PARAM$Tendencias1$minimo <- FALSE
-PARAM$Tendencias1$maximo <- FALSE
-PARAM$Tendencias1$promedio <- FALSE
-PARAM$Tendencias1$ratioavg <- FALSE
-PARAM$Tendencias1$ratiomax <- FALSE
+PARAM$Tendencias1$tendencia <- TRUE
+PARAM$Tendencias1$minimo <- TRUE
+PARAM$Tendencias1$maximo <- TRUE
+PARAM$Tendencias1$promedio <- TRUE
+PARAM$Tendencias1$ratioavg <- TRUE
+PARAM$Tendencias1$ratiomax <- TRUE
 
-PARAM$Tendencias2$run <- FALSE
+PARAM$Tendencias2$run <- TRUE
 PARAM$Tendencias2$ventana <- 4
-PARAM$Tendencias2$tendencia <- FALSE
-PARAM$Tendencias2$minimo <- FALSE
-PARAM$Tendencias2$maximo <- FALSE
-PARAM$Tendencias2$promedio <- FALSE
-PARAM$Tendencias2$ratioavg <- FALSE
-PARAM$Tendencias2$ratiomax <- FALSE
+PARAM$Tendencias2$tendencia <- TRUE
+PARAM$Tendencias2$minimo <- TRUE
+PARAM$Tendencias2$maximo <- TRUE
+PARAM$Tendencias2$promedio <- TRUE
+PARAM$Tendencias2$ratioavg <- TRUE
+PARAM$Tendencias2$ratiomax <- TRUE
 
 
 PARAM$RandomForest$run <- TRUE
@@ -649,12 +649,12 @@ if (PARAM$Tendencias2$run) {
 }
 
 #Trend Factor (TF)
-if (PARAM$lag1) & (PARAM$lag2) & (PARAM$lag3) {
+if (PARAM$lag1 & PARAM$lag2 & PARAM$lag3) {
 TF_gastos_totales_3lags = (gastos_totales_lag3 * 1 + gastos_totales_lag2 * 2 + gastos_totales_lag1 * 3 + gastos_totales * 4) / (gastos_totales_lag3 + gastos_totales_lag2 + gastos_totales_lag1 + gastos_totales)
 TF_ingresos_totales_3lags = (ingresos_totales_lag3 * 1 + ingresos_totales_lag2 * 2 + ingresos_totales_lag1 * 3 + ingresos_totales * 4) / (ingresos_totales_lag3 + ingresos_totales_lag2 + ingresos_totales_lag1 + ingresos_totales)
 }
 
-if (PARAM$lag1) & (PARAM$lag2)  {
+if (PARAM$lag1 & PARAM$lag2)  {
 TF_gastos_totales_3lags = ( gastos_totales_lag2 * 1 + gastos_totales_lag1 * 2 + gastos_totales * 3) / (gastos_totales_lag2 + gastos_totales_lag1 + gastos_totales)
 TF_ingresos_totales_3lags = (ingresos_totales_lag2 * 1 + ingresos_totales_lag1 * 2 + ingresos_totales * 3) / (ingresos_totales_lag2 + ingresos_totales_lag1 + ingresos_totales)
 }
