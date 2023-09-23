@@ -142,7 +142,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, distancia_salarioprom := salarios_recibidos - promedio_salario, na.rm = TRUE] #Distancia entre salario recibido y promedio 
   dataset[, distancia_salarioprom_edad := distancia_salarioprom / (cliente_edad^2), na.rm = TRUE] 
   dataset[, endeudamiento := rowSums(cbind(cprestamos_personales, cprestamos_prendarios, cprestamos_hipotecarios), na.rm = TRUE)] #Total de prestamos
-  dataset[, endeudamiento_rate := endeudamiento / activos_totales, na.rm = TRUE)] #Total de prestamos sobre los activos
+  dataset[, endeudamiento_rate := endeudamiento / activos_totales, na.rm = TRUE] #Total de prestamos sobre los activos
   dataset[, endeudamiento_edad := endeudamiento_rate / (cliente_edad^2), na.rm = TRUE] #Endeudamiento sobre la edad
   dataset[, endeudamiento_gcia_bco := endeudamiento_rate / (mpasivos_margen^2), na.rm = TRUE] #endeudamiento sobre la ganancia del banco
   dataset[, ingresos_gcia_bco := ingresos_totales / (mpasivos_margen^2), na.rm = TRUE] #Ingresaos totales sobre la ganancia del banco
