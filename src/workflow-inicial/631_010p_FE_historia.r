@@ -495,6 +495,26 @@ if (PARAM$lag1) {
   {
     dataset[, paste0(vcol, "_delta1") := get(vcol) - get(paste0(vcol, "_lag1"))]
   }
+ 
+
+##Agregamos algunos calculos usando lag1
+dataset[, variacion_salario_lag1 := (salarios_recibidos - salarios_recibidos_lag1) / salarios_recibidos_lag1, na.rm = FALSE] #variacion de salarios
+dataset[, variacion_ingresos_lag1 := (ingresos_totales - ingresos_totales_lag1) / ingresos_totales_lag1, na.rm = FALSE] #variacion de ingresos
+dataset[, variacion_ingresos_edad_lag1 := variacion_ingresos_lag1 / (cliente_edad), na.rm = FALSE] #variacion de ingresos por edad
+
+dataset[, gastos_totales__tclag1 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag1, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+dataset[, variacion_gastos_totales_lag1 := gastos_totales__tclag1 / (cliente_edad), na.rm = FALSE] #variacion de gastos totales por edad
+dataset[, variacion_gastos_lag1 := (gastos_totales - gastos_totales__tclag1) / gastos_totales__tclag1, na.rm = FALSE] #variacion de gastos
+dataset[, variacion_gastos2_lag1 := gastos_totales / gastos_totales__tclag1, na.rm = FALSE] #variacion de gastos contra lag1
+
+dataset[, variacion_mpagominimo_lag1 := (vm_mpagominimo - vm_mpagominimo_lag1) / vm_mpagominimo_lag1, na.rm = FALSE] #variacion de mpagominimo
+dataset[, variacion_vm_mpagado_lag1 := (vm_mpagado - vm_mpagado_lag1) / vm_mpagado_lag1, na.rm = FALSE] #variacion de pago tc
+dataset[, variacion_vm_mlimitecompra_lag1 := (vm_mlimitecompra - vm_mlimitecompra_lag1) / vm_mlimitecompra_lag1, na.rm = FALSE] #variacion del limite de compra
+
+dataset[, variacion_comisiones_totales_lag1 := (comisiones_totales - comisiones_totales_lag1) / comisiones_totales_lag1, na.rm = FALSE] #variacion de comisiones_totales
+dataset[, comis_sobre_activos_lag1 := (comisiones_totales) / (activos_totales - activos_totales_lag1), na.rm = FALSE] #e comisiones_totales sobre variacion activos
+
+dataset[, ctrx_q_normlag1 := (ctrx_quarter_normalizado - ctrx_quarter_normalizadolag1 )/ ctrx_quarter_normalizadolag1, na.rm = FALSE] 
 
   OUTPUT$lag1$ncol_despues <- ncol(dataset)
   GrabarOutput()
@@ -516,6 +536,29 @@ if (PARAM$lag2) {
     dataset[, paste0(vcol, "_delta2") := get(vcol) - get(paste0(vcol, "_lag2"))]
   }
 
+  ##Agregamos algunos calculos usando lag2
+  dataset[, variacion_salario_lag2 := (salarios_recibidos - salarios_recibidos_lag2) / salarios_recibidos_lag2, na.rm = FALSE] #variacion de salarios
+  dataset[, variacion_ingresos_lag2 := (ingresos_totales - ingresos_totales_lag2) / ingresos_totales_lag2, na.rm = FALSE] #variacion de ingresos
+  dataset[, variacion_ingresos_edad_lag2 := variacion_ingresos_lag2 / (cliente_edad), na.rm = FALSE]  #variacion de ingresos por edad
+
+  dataset[, gastos_totales__tclag2 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag2, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+  dataset[, variacion_gastos_totales_lag2 := gastos_totales__tclag2 / (cliente_edad), na.rm = FALSE]  #variacion de gastos totales por edad
+  dataset[, variacion_gastos_lag2 := (gastos_totales - gastos_totales__tclag2) / gastos_totales__tclag2, na.rm = FALSE] #variacion de gastos
+  dataset[, variacion_gastos2_lag2 := gastos_totales / gastos_totales__tclag2, na.rm = FALSE] #variacion de gastos contra lag2
+
+  dataset[, variacion_mpagominimo_lag2 := (vm_mpagominimo - vm_mpagominimo_lag2) / vm_mpagominimo_lag2, na.rm = FALSE]  #variacion de mpagominimo
+  dataset[, variacion_vm_mpagado_lag2 := (vm_mpagado - vm_mpagado_lag2) / vm_mpagado_lag2, na.rm = FALSE]  #variacion de pago tc
+  
+  dataset[, variacion_vm_mlimitecompra_lag2 := (vm_mlimitecompra - vm_mlimitecompra_lag2) / vm_mlimitecompra_lag2, na.rm = FALSE]  #variacion del limite de compra
+
+  dataset[, variacion_comisiones_totales_lag2 := (comisiones_totales - comisiones_totales_lag2) / comisiones_totales_lag2, na.rm = FALSE]  #variacion de comisiones_totales
+  dataset[, comis_sobre_activos_lag2 := (comisiones_totales) / (activos_totales - activos_totales_lag2), na.rm = FALSE]  #e comisiones_totales sobre variacion activos
+
+  dataset[, ctrx_q_normlag2 := (ctrx_quarter_normalizado - ctrx_quarter_normalizadolag2 )/ ctrx_quarter_normalizadolag2, na.rm = FALSE] 
+
+
+
+
   OUTPUT$lag2$ncol_despues <- ncol(dataset)
   GrabarOutput()
 }
@@ -535,6 +578,26 @@ if (PARAM$lag3) {
   {
     dataset[, paste0(vcol, "_delta3") := get(vcol) - get(paste0(vcol, "_lag3"))]
   }
+
+##Agregamos algunos calculos usando lag3
+dataset[, variacion_salario_lag3 := (salarios_recibidos - salarios_recibidos_lag3) / salarios_recibidos_lag3, na.rm = FALSE] #variacion de salarios
+dataset[, variacion_ingresos_lag3 := (ingresos_totales - ingresos_totales_lag3) / ingresos_totales_lag3, na.rm = FALSE] #variacion de ingresos
+dataset[, variacion_ingresos_edad_lag3 := variacion_ingresos_lag3 / (cliente_edad), na.rm = FALSE] #variacion de ingresos por edad
+
+dataset[, gastos_totales__tclag3 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag3, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+dataset[, variacion_gastos_totales_lag3 := gastos_totales__tclag3 / (cliente_edad), na.rm = FALSE] #variacion de gastos totales por edad
+dataset[, variacion_gastos_lag3 := (gastos_totales - gastos_totales__tclag3) / gastos_totales__tclag3, na.rm = FALSE] #variacion de gastos
+dataset[, variacion_gastos2_lag3 := gastos_totales / gastos_totales__tclag3, na.rm = FALSE] #variacion de gastos contra lag3
+
+dataset[, variacion_mpagominimo_lag3 := (vm_mpagominimo - vm_mpagominimo_lag3) / vm_mpagominimo_lag3, na.rm = FALSE] #variacion de mpagominimo
+dataset[, variacion_vm_mpagado_lag3 := (vm_mpagado - vm_mpagado_lag3) / vm_mpagado_lag3, na.rm = FALSE] #variacion de pago tc
+dataset[, variacion_vm_mlimitecompra_lag3 := (vm_mlimitecompra - vm_mlimitecompra_lag3) / vm_mlimitecompra_lag3, na.rm = FALSE] #variacion del limite de compra
+
+dataset[, variacion_comisiones_totales_lag3 := (comisiones_totales - comisiones_totales_lag3) / comisiones_totales_lag3, na.rm = FALSE] #variacion de comisiones_totales
+dataset[, comis_sobre_activos_lag3 := (comisiones_totales) / (activos_totales - activos_totales_lag3), na.rm = FALSE] #e comisiones_totales sobre variacion activos
+
+dataset[, ctrx_q_normlag3 := (ctrx_quarter_normalizado - ctrx_quarter_normalizadolag3 )/ ctrx_quarter_normalizadolag3, na.rm = FALSE] 
+
 
   OUTPUT$lag3$ncol_despues <- ncol(dataset)
   GrabarOutput()
@@ -577,13 +640,34 @@ if (PARAM$Tendencias2$run) {
     minimo = PARAM$Tendencias2$minimo,
     maximo = PARAM$Tendencias2$maximo,
     promedio = PARAM$Tendencias2$promedio,
-    ratioavg = PARAM$Tendencias2$ratioavg,
+    ratioavg = PARAM$Tendencias2$ratioavg, 
     ratiomax = PARAM$Tendencias2$ratiomax
   )
 
   OUTPUT$TendenciasYmuchomas2$ncol_despues <- ncol(dataset)
   GrabarOutput()
 }
+
+#Trend Factor (TF)
+if (PARAM$lag1) & (PARAM$lag2) & (PARAM$lag3) {
+TF_gastos_totales_3lags = (gastos_totales_lag3 * 1 + gastos_totales_lag2 * 2 + gastos_totales_lag1 * 3 + gastos_totales * 4) / (gastos_totales_lag3 + gastos_totales_lag2 + gastos_totales_lag1 + gastos_totales)
+TF_ingresos_totales_3lags = (ingresos_totales_lag3 * 1 + ingresos_totales_lag2 * 2 + ingresos_totales_lag1 * 3 + ingresos_totales * 4) / (ingresos_totales_lag3 + ingresos_totales_lag2 + ingresos_totales_lag1 + ingresos_totales)
+}
+
+if (PARAM$lag1) & (PARAM$lag2)  {
+TF_gastos_totales_3lags = ( gastos_totales_lag2 * 1 + gastos_totales_lag1 * 2 + gastos_totales * 3) / (gastos_totales_lag2 + gastos_totales_lag1 + gastos_totales)
+TF_ingresos_totales_3lags = (ingresos_totales_lag2 * 1 + ingresos_totales_lag1 * 2 + ingresos_totales * 3) / (ingresos_totales_lag2 + ingresos_totales_lag1 + ingresos_totales)
+}
+
+if (PARAM$lag1) {
+TF_gastos_totales_3lags = (gastos_totales_lag1 * 1 + gastos_totales * 2) / (gastos_totales_lag1 + gastos_totales)
+TF_ingresos_totales_3lags = (ingresos_totales_lag1 * 1 + ingresos_totales * 2) / (ingresos_totales_lag1 + ingresos_totales)
+}
+
+
+
+
+
 
 #------------------------------------------------------------------------------
 # Agrego variables a partir de las hojas de un Random Forest
