@@ -128,20 +128,20 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, vmr_mpagominimo := vm_mpagominimo / vm_mlimitecompra]
 
   # Aqui debe usted agregar sus propias nuevas variables
-  dataset[, salarios_recibidos := rowSums(cbind(mpayroll, mpayroll2), na.rm = TRUE)] #Ingresos por empleos en relación de dependencia
-  dataset[, descuentos_recibidos := rowSums(cbind(mcajeros_propios_descuentos, mtarjeta_visa_descuentos, mtarjeta_master_descuentos), na.rm = TRUE)] #Descuentos
-  dataset[, comisiones_totales := rowSums(cbind(mcomisiones_mantenimiento, mcomisiones_otras), na.rm = TRUE)] #Comisiones
-  dataset[, ingresos_totales := rowSums(cbind(mpayroll, mpayroll2, mtransferencias_recibidas, mcheques_depositados), na.rm = TRUE)] #Ingresos Totales
-  dataset[, egresos_totales := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Egresos Totales
-  dataset[, gastos_totales := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_msaldopesos, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
-  dataset[, dolares_neto := mforex_buy - mforex_sell, na.rm = TRUE] #Compra dólares menos venta de dólares
-  dataset[, activos_totales := rowSums(cbind(mcuentas_saldo, mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #Activos Totales
-  dataset[, dolares_neto := matm / (matm + matm_other), na.rm = TRUE] #Comparación entre uso de cajeros propios vs de otros bancos
-  dataset[, vmr_tc_mayor90 := ifelse(!is.na(vmr_mconsumototal), ifelse(vmr_mconsumototal > 0.9, 1, 0), NA)] # Valor 1 si consumió más del 90% del límite de la tarjeta
-  dataset[, promedio_salario := mean(salarios_recibidos, na.rm = TRUE), by = foto_mes] #Promedio de salarios por mes
-  dataset[, distancia_salarioprom := salarios_recibidos - promedio_salario, na.rm = TRUE] #Distancia entre salario recibido y promedio 
+  dataset[, m_salarios_recibidos := rowSums(cbind(mpayroll, mpayroll2), na.rm = TRUE)] #Ingresos por empleos en relación de dependencia
+  dataset[, m_descuentos_recibidos := rowSums(cbind(mcajeros_propios_descuentos, mtarjeta_visa_descuentos, mtarjeta_master_descuentos), na.rm = TRUE)] #Descuentos
+  dataset[, m_comisiones_totales := rowSums(cbind(mcomisiones_mantenimiento, mcomisiones_otras), na.rm = TRUE)] #Comisiones
+  dataset[, m_ingresos_totales := rowSums(cbind(mpayroll, mpayroll2, mtransferencias_recibidas, mcheques_depositados), na.rm = TRUE)] #Ingresos Totales
+  dataset[, m_egresos_totales := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Egresos Totales
+  dataset[, m_gastos_totales := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_msaldopesos, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+  dataset[, m_dolares_neto := mforex_buy - mforex_sell, na.rm = TRUE] #Compra dólares menos venta de dólares
+  dataset[, m_activos_totales := rowSums(cbind(mcuentas_saldo, mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #Activos Totales
+  dataset[, m_dolares_neto := matm / (matm + matm_other), na.rm = TRUE] #Comparación entre uso de cajeros propios vs de otros bancos
+  dataset[, cons_tc_mayor90 := ifelse(!is.na(vmr_mconsumototal), ifelse(vmr_mconsumototal > 0.9, 1, 0), NA)] # Valor 1 si consumió más del 90% del límite de la tarjeta
+  dataset[, m_promedio_salario := mean(salarios_recibidos, na.rm = TRUE), by = foto_mes] #Promedio de salarios por mes
+  dataset[, rate_distancia_salarioprom := salarios_recibidos - promedio_salario, na.rm = TRUE] #Distancia entre salario recibido y promedio 
   dataset[, distancia_salarioprom_edad := distancia_salarioprom / (cliente_edad^2), na.rm = TRUE] 
-  dataset[, endeudamiento := rowSums(cbind(cprestamos_personales, cprestamos_prendarios, cprestamos_hipotecarios), na.rm = TRUE)] #Total de prestamos
+  dataset[, m_endeudamiento := rowSums(cbind(cprestamos_personales, cprestamos_prendarios, cprestamos_hipotecarios), na.rm = TRUE)] #Total de prestamos
   dataset[, endeudamiento_rate := endeudamiento / activos_totales, na.rm = TRUE] #Total de prestamos sobre los activos
   dataset[, endeudamiento_edad := endeudamiento_rate / (cliente_edad^2), na.rm = TRUE] #Endeudamiento sobre la edad
   dataset[, endeudamiento_gcia_bco := endeudamiento_rate / (mpasivos_margen^2), na.rm = TRUE] #endeudamiento sobre la ganancia del banco
