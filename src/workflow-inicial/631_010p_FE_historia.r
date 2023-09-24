@@ -495,7 +495,12 @@ if (PARAM$lag1) {
   {
     dataset[, paste0(vcol, "_delta1") := get(vcol) - get(paste0(vcol, "_lag1"))]
   }
- 
+
+  OUTPUT$lag1$ncol_despues <- ncol(dataset)
+  GrabarOutput()
+}
+
+if (PARAM$lag1) {
 
 ##Agregamos algunos calculos usando lag1
 dataset[, variacion_salario_lag1 := (salarios_recibidos - salarios_recibidos_lag1) / salarios_recibidos_lag1] #variacion de salarios
@@ -520,7 +525,6 @@ dataset[, ctrx_q_normlag1 := (ctrx_quarter_normalizado - ctrx_quarter_normalizad
   GrabarOutput()
 }
 
-
 cols_lagueables <- intersect(cols_lagueables, colnames(dataset))
 if (PARAM$lag2) {
   # creo los campos lags de orden 2
@@ -536,6 +540,11 @@ if (PARAM$lag2) {
     dataset[, paste0(vcol, "_delta2") := get(vcol) - get(paste0(vcol, "_lag2"))]
   }
 
+  OUTPUT$lag2$ncol_despues <- ncol(dataset)
+  GrabarOutput()
+}
+
+if (PARAM$lag2) {
   ##Agregamos algunos calculos usando lag2
   dataset[, variacion_salario_lag2 := (salarios_recibidos - salarios_recibidos_lag2) / salarios_recibidos_lag2] #variacion de salarios
   dataset[, variacion_ingresos_lag2 := (ingresos_totales - ingresos_totales_lag2) / ingresos_totales_lag2] #variacion de ingresos
@@ -579,6 +588,14 @@ if (PARAM$lag3) {
     dataset[, paste0(vcol, "_delta3") := get(vcol) - get(paste0(vcol, "_lag3"))]
   }
 
+  OUTPUT$lag3$ncol_despues <- ncol(dataset)
+  GrabarOutput()
+}
+
+
+if (PARAM$lag3) {
+
+
 ##Agregamos algunos calculos usando lag3
 dataset[, variacion_salario_lag3 := (salarios_recibidos - salarios_recibidos_lag3) / salarios_recibidos_lag3] #variacion de salarios
 dataset[, variacion_ingresos_lag3 := (ingresos_totales - ingresos_totales_lag3) / ingresos_totales_lag3] #variacion de ingresos
@@ -602,7 +619,6 @@ dataset[, ctrx_q_normlag3 := (ctrx_quarter_normalizado - ctrx_quarter_normalizad
   OUTPUT$lag3$ncol_despues <- ncol(dataset)
   GrabarOutput()
 }
-
 
 #--------------------------------------
 # agrego las tendencias
