@@ -507,19 +507,19 @@ dataset[, variacion_salario_lag1 := (salarios_recibidos - salarios_recibidos_lag
 dataset[, variacion_ingresos_lag1 := (ingresos_totales - ingresos_totales_lag1) / ingresos_totales_lag1] #variacion de ingresos
 dataset[, variacion_ingresos_edad_lag1 := variacion_ingresos_lag1 / (cliente_edad)] #variacion de ingresos por edad
 
-dataset[, gastos_totales__tclag1 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag1, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
-dataset[, variacion_gastos_totales_lag1 := gastos_totales__tclag1 / (cliente_edad)] #variacion de gastos totales por edad
-dataset[, variacion_gastos_lag1 := (gastos_totales - gastos_totales__tclag1) / gastos_totales__tclag1] #variacion de gastos
-dataset[, variacion_gastos2_lag1 := gastos_totales / gastos_totales__tclag1] #variacion de gastos contra lag1
+#dataset[, gastos_totales__tclag1 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag1, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+#dataset[, variacion_gastos_totales_lag1 := gastos_totales__tclag1 / (cliente_edad)] #variacion de gastos totales por edad
+dataset[, variacion_gastos_lag1 := (gastos_totales - gastos_totales_lag1) / gastos_totales_lag1] #variacion de gastos
+dataset[, variacion_gastos2_lag1 := gastos_totales / gastos_totales_lag1] #variacion de gastos contra lag1
 
-dataset[, variacion_mpagominimo_lag1 := (vm_mpagominimo - vm_mpagominimo_lag1) / vm_mpagominimo_lag1] #variacion de mpagominimo
-dataset[, variacion_vm_mpagado_lag1 := (vm_mpagado - vm_mpagado_lag1) / vm_mpagado_lag1] #variacion de pago tc
-dataset[, variacion_vm_mlimitecompra_lag1 := (vm_mlimitecompra - vm_mlimitecompra_lag1) / vm_mlimitecompra_lag1] #variacion del limite de compra
+#dataset[, variacion_mpagominimo_lag1 := (vm_mpagominimo - vm_mpagominimo_lag1) / vm_mpagominimo_lag1] #variacion de mpagominimo
+#dataset[, variacion_vm_mpagado_lag1 := (vm_mpagado - vm_mpagado_lag1) / vm_mpagado_lag1] #variacion de pago tc
+#dataset[, variacion_vm_mlimitecompra_lag1 := (vm_mlimitecompra - vm_mlimitecompra_lag1) / vm_mlimitecompra_lag1] #variacion del limite de compra
 
 dataset[, variacion_comisiones_totales_lag1 := (comisiones_totales - comisiones_totales_lag1) / comisiones_totales_lag1] #variacion de comisiones_totales
-dataset[, comis_sobre_activos_lag1 := (comisiones_totales) / (activos_totales - activos_totales_lag1)] #e comisiones_totales sobre variacion activos
+#dataset[, comis_sobre_activos_lag1 := (comisiones_totales) / (activos_totales - activos_totales_lag1)] #e comisiones_totales sobre variacion activos
 
-dataset[, ctrx_q_normlag1 := (ctrx_quarter_normalizado - ctrx_quarter_normalizadolag1 )/ ctrx_quarter_normalizadolag1] 
+dataset[, ctrx_q_normlag1 := (ctrx_quarter_normalizado - ctrx_quarter_normalizado_lag1 )/ ctrx_quarter_normalizado_lag1] 
 
   OUTPUT$lag1$ncol_despues <- ncol(dataset)
   GrabarOutput()
@@ -550,20 +550,19 @@ if (PARAM$lag2) {
   dataset[, variacion_ingresos_lag2 := (ingresos_totales - ingresos_totales_lag2) / ingresos_totales_lag2] #variacion de ingresos
   dataset[, variacion_ingresos_edad_lag2 := variacion_ingresos_lag2 / (cliente_edad)]  #variacion de ingresos por edad
 
-  dataset[, gastos_totales__tclag2 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag2, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
-  dataset[, variacion_gastos_totales_lag2 := gastos_totales__tclag2 / (cliente_edad)]  #variacion de gastos totales por edad
-  dataset[, variacion_gastos_lag2 := (gastos_totales - gastos_totales__tclag2) / gastos_totales__tclag2] #variacion de gastos
-  dataset[, variacion_gastos2_lag2 := gastos_totales / gastos_totales__tclag2] #variacion de gastos contra lag2
+  #dataset[, gastos_totales__tclag2 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag2, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+  #dataset[, variacion_gastos_totales_lag2 := gastos_totales__tclag2 / (cliente_edad)]  #variacion de gastos totales por edad
+  dataset[, variacion_gastos_lag2 := (gastos_totales - gastos_totales_lag2) / gastos_totales_lag2] #variacion de gastos
+  dataset[, variacion_gastos2_lag2 := gastos_totales / gastos_totales_lag2] #variacion de gastos contra lag2
 
-  dataset[, variacion_mpagominimo_lag2 := (vm_mpagominimo - vm_mpagominimo_lag2) / vm_mpagominimo_lag2]  #variacion de mpagominimo
-  dataset[, variacion_vm_mpagado_lag2 := (vm_mpagado - vm_mpagado_lag2) / vm_mpagado_lag2]  #variacion de pago tc
-  
-  dataset[, variacion_vm_mlimitecompra_lag2 := (vm_mlimitecompra - vm_mlimitecompra_lag2) / vm_mlimitecompra_lag2]  #variacion del limite de compra
+  #dataset[, variacion_mpagominimo_lag2 := (vm_mpagominimo - vm_mpagominimo_lag2) / vm_mpagominimo_lag2]  #variacion de mpagominimo
+  #dataset[, variacion_vm_mpagado_lag2 := (vm_mpagado - vm_mpagado_lag2) / vm_mpagado_lag2]  #variacion de pago tc
+#  dataset[, variacion_vm_mlimitecompra_lag2 := (vm_mlimitecompra - vm_mlimitecompra_lag2) / vm_mlimitecompra_lag2]  #variacion del limite de compra
 
   dataset[, variacion_comisiones_totales_lag2 := (comisiones_totales - comisiones_totales_lag2) / comisiones_totales_lag2]  #variacion de comisiones_totales
-  dataset[, comis_sobre_activos_lag2 := (comisiones_totales) / (activos_totales - activos_totales_lag2)]  #e comisiones_totales sobre variacion activos
+  #dataset[, comis_sobre_activos_lag2 := (comisiones_totales) / (activos_totales - activos_totales_lag2)]  #e comisiones_totales sobre variacion activos
 
-  dataset[, ctrx_q_normlag2 := (ctrx_quarter_normalizado - ctrx_quarter_normalizadolag2 )/ ctrx_quarter_normalizadolag2] 
+  dataset[, ctrx_q_normlag2 := (ctrx_quarter_normalizado - ctrx_quarter_normalizado_lag2 )/ ctrx_quarter_normalizado_lag2] 
 
 
 
@@ -601,19 +600,19 @@ dataset[, variacion_salario_lag3 := (salarios_recibidos - salarios_recibidos_lag
 dataset[, variacion_ingresos_lag3 := (ingresos_totales - ingresos_totales_lag3) / ingresos_totales_lag3] #variacion de ingresos
 dataset[, variacion_ingresos_edad_lag3 := variacion_ingresos_lag3 / (cliente_edad)] #variacion de ingresos por edad
 
-dataset[, gastos_totales__tclag3 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag3, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
-dataset[, variacion_gastos_totales_lag3 := gastos_totales__tclag3 / (cliente_edad)] #variacion de gastos totales por edad
-dataset[, variacion_gastos_lag3 := (gastos_totales - gastos_totales__tclag3) / gastos_totales__tclag3] #variacion de gastos
-dataset[, variacion_gastos2_lag3 := gastos_totales / gastos_totales__tclag3] #variacion de gastos contra lag3
+#dataset[, gastos_totales__tclag3 := rowSums(cbind(mextraccion_autoservicio, mautoservicio, vm_mconsumospesos_lag3, mcuenta_debitos_automaticos, mpagodeservicios, mpagomiscuentas, comisiones_totales, mcheques_emitidos), na.rm = TRUE)] #Gastos Totales
+#dataset[, variacion_gastos_totales_lag3 := gastos_totales__tclag3 / (cliente_edad)] #variacion de gastos totales por edad
+dataset[, variacion_gastos_lag3 := (gastos_totales - gastos_totales_lag3) / gastos_totales_lag3] #variacion de gastos
+dataset[, variacion_gastos2_lag3 := gastos_totales / gastos_totales_lag3] #variacion de gastos contra lag3
 
-dataset[, variacion_mpagominimo_lag3 := (vm_mpagominimo - vm_mpagominimo_lag3) / vm_mpagominimo_lag3] #variacion de mpagominimo
-dataset[, variacion_vm_mpagado_lag3 := (vm_mpagado - vm_mpagado_lag3) / vm_mpagado_lag3] #variacion de pago tc
-dataset[, variacion_vm_mlimitecompra_lag3 := (vm_mlimitecompra - vm_mlimitecompra_lag3) / vm_mlimitecompra_lag3] #variacion del limite de compra
+#dataset[, variacion_mpagominimo_lag3 := (vm_mpagominimo - vm_mpagominimo_lag3) / vm_mpagominimo_lag3] #variacion de mpagominimo
+#dataset[, variacion_vm_mpagado_lag3 := (vm_mpagado - vm_mpagado_lag3) / vm_mpagado_lag3] #variacion de pago tc
+#dataset[, variacion_vm_mlimitecompra_lag3 := (vm_mlimitecompra - vm_mlimitecompra_lag3) / vm_mlimitecompra_lag3] #variacion del limite de compra
 
 dataset[, variacion_comisiones_totales_lag3 := (comisiones_totales - comisiones_totales_lag3) / comisiones_totales_lag3] #variacion de comisiones_totales
-dataset[, comis_sobre_activos_lag3 := (comisiones_totales) / (activos_totales - activos_totales_lag3)] #e comisiones_totales sobre variacion activos
+#dataset[, comis_sobre_activos_lag3 := (comisiones_totales) / (activos_totales - activos_totales_lag3)] #e comisiones_totales sobre variacion activos
 
-dataset[, ctrx_q_normlag3 := (ctrx_quarter_normalizado - ctrx_quarter_normalizadolag3 )/ ctrx_quarter_normalizadolag3] 
+dataset[, ctrx_q_normlag3 := (ctrx_quarter_normalizado - ctrx_quarter_normalizado_lag3 )/ ctrx_quarter_normalizado_lag3] 
 
 
   OUTPUT$lag3$ncol_despues <- ncol(dataset)
