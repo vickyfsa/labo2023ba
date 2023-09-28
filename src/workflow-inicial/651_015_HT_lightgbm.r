@@ -187,7 +187,7 @@ EstimarGanancia_lightgbm <- function(x) {
   param_completo <- c(PARAM$lgb_basicos, x)
 
   param_completo$early_stopping_rounds <-
-    as.integer(400 + 4 / param_completo$learning_rate)
+    as.integer(40 + 4 / param_completo$learning_rate)
 
   GLOBAL_arbol <<- 0L
   GLOBAL_gan_max <<- -Inf
@@ -328,7 +328,7 @@ EstimarGanancia_lightgbmCV <- function(x) {
   param_completo <- c(PARAM$lgb_basicos, x)
 
   param_completo$early_stopping_rounds <-
-    as.integer(400 + 4 / param_completo$learning_rate)
+    as.integer(40 + 4 / param_completo$learning_rate)
 
   vcant_optima <<- c()
   GLOBAL_arbol <<- 0L
