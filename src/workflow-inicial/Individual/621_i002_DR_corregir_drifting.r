@@ -141,7 +141,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   + cpayroll2_trx + ccuenta_debitos_automaticos + cforex + cforex_buy + cforex_sell + ccallcenter_transacciones
   + chomebanking_transacciones + ccajas_transacciones + ccajas_otras + catm_trx + catm_trx_other + ctrx_quarter + cmobile_app_trx]
 
-  dataset[, cX1_Suma_cantytrans_decil := frankv(X1_Suma_cantytrans, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, cX1_Suma_cantytrans_decil := frankv(cX1_Suma_cantytrans, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
   #5)-------------------------------------------------------------
   # Hago un rankeo de las variables de montos y saldos totales: 
