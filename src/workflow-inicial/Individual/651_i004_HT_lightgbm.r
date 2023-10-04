@@ -47,19 +47,19 @@ PARAM$lgb_basicos <- list(
   feature_pre_filter = FALSE,
   force_row_wise = TRUE, # para reducir warnings
   verbosity = -100,
-  max_depth = -1L, # -1 significa no limitar,  por ahora lo dejo fijo
-  min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
+  # max_depth = -1L, # -1 significa no limitar,  por ahora lo dejo fijo
+  # min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
   min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
-  lambda_l1 = 0.0, # lambda_l1 >= 0.0
-  lambda_l2 = 0.0, # lambda_l2 >= 0.0
+  # lambda_l1 = 0.0, # lambda_l1 >= 0.0
+  # lambda_l2 = 0.0, # lambda_l2 >= 0.0
   max_bin = 31L, # lo debo dejar fijo, no participa de la BO
   num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
 
   bagging_fraction = 1.0, # 0.0 < bagging_fraction <= 1.0
-  pos_bagging_fraction = 1.0, # 0.0 < pos_bagging_fraction <= 1.0
-  neg_bagging_fraction = 1.0, # 0.0 < neg_bagging_fraction <= 1.0
+  # pos_bagging_fraction = 1.0, # 0.0 < pos_bagging_fraction <= 1.0
+  # neg_bagging_fraction = 1.0, # 0.0 < neg_bagging_fraction <= 1.0
   is_unbalance = FALSE, #
-  scale_pos_weight = 1.0, # scale_pos_weight > 0.0
+  # scale_pos_weight = 1.0, # scale_pos_weight > 0.0
 
   drop_rate = 0.1, # 0.0 < neg_bagging_fraction <= 1.0
   max_drop = 50, # <=0 means no limit
@@ -77,12 +77,20 @@ PARAM$bo_lgb <- makeParamSet(
   makeNumericParam("learning_rate", lower = 0.02, upper = 0.3),
   makeNumericParam("feature_fraction", lower = 0.01, upper = 1.0),
   makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
-  makeIntegerParam("min_data_in_leaf", lower = 100L, upper = 50000L)
+  makeIntegerParam("min_data_in_leaf", lower = 100L, upper = 50000L),
+  makeNumericParam("min_gain_to_split", lower = 0.00, upper = 0.5),
+  makeNumericParam("lambda_l1", lower = 0.00, upper = 10.00),
+  makeNumericParam("lambda_l2", lower = 0.00, upper = 10.00),
+  makeIntegerParam("max_depth", lower = 3L, upper = 7L),
+  makeIntegerParam("early_stopping_rounds", lower = 10L, upper = 100L),
+  makeIntegerParam("scale_pos_weight", lower = 10L, upper = 130L),
+  makeNumericParam("neg_bagging_fraction", lower = 0.0, upper = 0.9),
+  makeNumericParam("pos_bagging_fraction", lower = 0.8, upper = 1.0)
 )
 
 
 # si usted es ambicioso, y tiene paciencia, podria subir este valor a 100
-PARAM$bo_iteraciones <- 50 # iteraciones de la Optimizacion Bayesiana
+PARAM$bo_iteraciones <- 100 # iteraciones de la Optimizacion Bayesiana
 
 PARAM$home <- "~/buckets/b1/"
 
@@ -657,3 +665,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
+print("FIN")
